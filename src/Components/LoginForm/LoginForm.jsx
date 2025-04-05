@@ -9,6 +9,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,9 +28,14 @@ const LoginForm = () => {
       );
 
     if (response.success) {
-        localStorage.setItem("authenticated", "true");
+        if(rememberMe) {
+            localStorage.setItem("authenticated", "true");
+        } else {
+            sessionStorage.setItem('authenticated', 'true');
+        }
+        
         setIsError(false)
-        navigate("/welcome");
+        navigate("/#/welcome");
     } else {
         setIsError(true);
         setMessage("Invalid email or password.");
